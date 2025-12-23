@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "model": "nex-agi/deepseek-v3.1-nex-n1:free",
+                    "model": "google/gemini-2.0-flash-exp:free",
                     "messages": [
                         { "role": "system", "content": "Вы — Аврора, профессиональный ИИ-ассистент платформы GuardWealth AI. Отвечайте кратко и профессионально на русском языке." },
                         { "role": "user", "content": text }
