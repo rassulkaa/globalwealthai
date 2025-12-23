@@ -182,6 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
             appendMessage(text, 'user');
         }
 
+        if (typeof CONFIG === 'undefined' || !CONFIG.OPENROUTER_API_KEY || CONFIG.OPENROUTER_API_KEY === 'API_KEY_PLACEHOLDER') {
+            hideTyping();
+            appendMessage("Ошибка: API ключ не найден. Проверьте файл config.js и убедитесь, что ключ указан верно.", 'ai');
+            return;
+        }
+
         showTyping();
 
         try {

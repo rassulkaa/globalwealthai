@@ -266,11 +266,16 @@
         <source src="https://www.bensound.com/bensound-music/bensound-creativeminds.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Подключение конфигурации -->
+    <script src="config.js"></script>
     <script>
-        // Placeholder for GitHub Actions to inject the key
-        window.CONFIG = {
-            OPENROUTER_API_KEY: "API_KEY_PLACEHOLDER"
-        };
+        // Если CONFIG не определен в config.js, инициализируем его с плейсхолдером
+        // Это позволяет GitHub Actions подставлять ключ при деплое
+        if (typeof CONFIG === 'undefined') {
+            window.CONFIG = {
+                OPENROUTER_API_KEY: "API_KEY_PLACEHOLDER"
+            };
+        }
     </script>
     <script src="script.js"></script>
 </body>
