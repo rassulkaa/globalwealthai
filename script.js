@@ -182,48 +182,16 @@ document.addEventListener('DOMContentLoaded', () => {
             appendMessage(text, 'user');
         }
 
-        if (typeof CONFIG === 'undefined' || !CONFIG.OPENROUTER_API_KEY || CONFIG.OPENROUTER_API_KEY === 'API_KEY_PLACEHOLDER') {
-            hideTyping();
-            appendMessage("Ошибка: API ключ не найден. Проверьте файл config.js и убедитесь, что ключ указан верно.", 'ai');
-            return;
-        }
-
+        // Simulated chatbot response (no external API)
         showTyping();
-
-        try {
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${CONFIG.OPENROUTER_API_KEY}`,
-                    "HTTP-Referer": window.location.href,
-                    "X-Title": "GuardWealth AI",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "model": "google/gemini-2.0-flash-exp:free",
-                    "messages": [
-                        { "role": "system", "content": "Вы — Аврора, профессиональный ИИ-ассистент платформы GuardWealth AI. Отвечайте кратко и профессионально на русском языке." },
-                        { "role": "user", "content": text }
-                    ]
-                })
-            });
-
-            const data = await response.json();
+        // Simulate processing delay
+        setTimeout(() => {
             hideTyping();
+            // Simple echo or canned answer
+            const reply = `Вы сказали: "${text}". Это тестовый ответ без использования внешних API.`;
+            appendMessage(reply, 'ai');
+        }, 1000);
 
-            if (data.choices && data.choices[0].message) {
-                appendMessage(data.choices[0].message.content, 'ai');
-            } else if (data.error) {
-                console.error("OpenRouter Error:", data.error);
-                appendMessage(`Ошибка ИИ: ${data.error.message || "Неизвестная ошибка"}. Проверьте баланс или ключ на OpenRouter.`, 'ai');
-            } else {
-                appendMessage("Ошибка API: Некорректный ответ от сервера.", 'ai');
-            }
-        } catch (error) {
-            hideTyping();
-            console.error("Fetch Error:", error);
-            appendMessage("Техническая ошибка: не удалось связаться с сервером. Проверьте соединение с интернетом.", 'ai');
-        }
     }
 
     chatToggle.addEventListener('click', toggleChat);
