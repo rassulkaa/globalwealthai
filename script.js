@@ -207,12 +207,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.choices && data.choices[0].message) {
                 appendMessage(data.choices[0].message.content, 'ai');
+            } else if (data.error) {
+                console.error("OpenRouter Error:", data.error);
+                appendMessage(`Ошибка ИИ: ${data.error.message || "Неизвестная ошибка"}. Проверьте баланс или ключ на OpenRouter.`, 'ai');
             } else {
-                appendMessage("Ошибка API. Проверьте ключ в config.js.", 'ai');
+                appendMessage("Ошибка API: Некорректный ответ от сервера.", 'ai');
             }
         } catch (error) {
             hideTyping();
-            appendMessage("Техническая ошибка. Проверьте соединение.", 'ai');
+            console.error("Fetch Error:", error);
+            appendMessage("Техническая ошибка: не удалось связаться с сервером. Проверьте соединение с интернетом.", 'ai');
         }
     }
 
